@@ -1,0 +1,19 @@
+install.packages("usethis")
+library(usethis)
+
+create_package("bigtenR")
+
+#' get and summarize big ten team data
+#' this function fetches team data from bigtenR and returns summary
+#'
+#' @param team Character string of the team name (e.g., "Ohio State")
+#' @return Summary of the team data
+#' @import bigtenR
+#' @export
+my_bigten_summary <- function(team) {
+  # use a function from bigtenR
+  data <- read.csv(bigten.csv)
+  summary(data)
+}
+
+my_bigten_summary
