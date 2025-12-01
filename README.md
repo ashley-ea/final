@@ -1,1 +1,2 @@
 # final
+Each point represents a Big Ten school in one year.  If the point is above the dashed line, athletes at that school graduated with a higher grade than those who didn't play a sport.  This also means that if the point is below the dashed line, athletes did worse academically than their peers who didn't play a sport.  Looking at the visual, we can see that at Northwestern, athletes were doing better than their non-athlete peers.  
