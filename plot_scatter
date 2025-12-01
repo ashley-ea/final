@@ -1,0 +1,42 @@
+' Scatterplot: Athlete vs. Student Graduation Rates
+#'
+#' Makes a simple scatterplot comparing athlete graduation rates
+#' to general student graduation rates for Big Ten schools.
+#' One dot = one school in one year.
+#'
+#' @param color_by_year Should points be colored by year? Default TRUE.
+#' @return A ggplot2 scatterplot
+#' @export
+#' @examples
+#' grad_scatter()
+#' grad_scatter(color_by_year = FALSE)
+grad_scatter <- function(color_by_year = TRUE) {
+  
+  library(ggplot2)
+  
+  p <- ggplot(bigten, aes(x = rate[status == "student"], 
+                          y = rate[status == "athlete"],
+                          color = if(color_by_year) year else NULL)) +
+    geom_point(size = 3) +
+    geom_abline(slope = 1, intercept = 0, linetype = "dashed") +   
+    labs(title = "Big Ten Graduation Rates: Athletes vs. Students",
+         x = "General Student Graduation Rate (%)",
+         y = "Athlete Graduation Rate (%)",
+         color = "Year",
+         caption = "Data: NCAA (1984-85 and 1993-94)") +
+    theme_minimal() +
+    theme(plot.title = element_text(size = 14, face = "bold"))
+  
+  # labels only on extreme points
+  extremes <- bigten %>%
+    group_by(school, year) %>%
+    summarise(student_rate = rate[status == "student"],
+              athlete_rate = rate[status == "athlete"]) %>%
+    filter(abs(athlete_rate - student_rate) > 15)
+  
+  p <- p + geom_text(data = extremes,
+                     aes(label = school),
+                     vjust = -1, size = 3.5)
+  
+  return(p)
+}
