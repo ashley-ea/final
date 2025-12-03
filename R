@@ -10,8 +10,16 @@
 #' grad_scatter(color_by_year = FALSE)
 grad_scatter <- function(color_by_year = TRUE) {
   
-  library(ggplot2)
-  
+library(ggplot2)
+install.packages("usethis")
+library(usethis)
+install.packages("devtools") 
+library(devtools)
+
+create_package("bigtenR")
+document()      #generates docs & NAMESPACE
+
+#create plot for data
   p <- ggplot(bigten, aes(x = rate[status == "student"], 
                           y = rate[status == "athlete"],
                           color = if(color_by_year) year else NULL)) +
@@ -24,6 +32,15 @@ grad_scatter <- function(color_by_year = TRUE) {
          caption = "Data: NCAA (1984-85 and 1993-94)") +
     theme_minimal() +
     theme(plot.title = element_text(size = 14, face = "bold"))
+
+#frequency plot:
+barplot(table(df$school),
+        main = "Frequency of schools mentioned",
+        xlab = "school",
+        ylab = "frequency",
+        col = c('#13294B', 'red', 'gold', 'blue', "darkgreen", "#7a0019", 'purple', 'red', '#001E44', 'black', '#C5050C'),
+        las = 2)
+
   
   # labels only on extreme points
   extremes <- bigten %>%
@@ -38,3 +55,19 @@ grad_scatter <- function(color_by_year = TRUE) {
   
   return(p)
 }
+
+#' get and summarize big ten team data
+#' this function fetches team data from bigtenR and returns summary
+#'
+#' @param team Character string of the team name (e.g., "Ohio State")
+#' @return Summary of the team data
+#' @import bigtenR
+#' @export
+
+my_bigten_summary <- function(team) {
+  # use a function from bigtenR
+  data <- read.csv(bigten.csv)
+  summary(data)
+}
+
+my_bigten_summary
