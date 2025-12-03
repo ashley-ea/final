@@ -1,9 +1,7 @@
 ' Scatterplot: Athlete vs. Student Graduation Rates
-#'
+
 #' Makes a simple scatterplot comparing athlete graduation rates
-#' to general student graduation rates for Big Ten schools.
-#' One dot = one school in one year.
-#'
+#
 #' @param color_by_year Should points be colored by year? Default TRUE.
 #' @return A ggplot2 scatterplot
 #' @export
